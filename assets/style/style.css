@@ -1,0 +1,106 @@
+* {box-sizing:border-box}
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form_container{    
+    width: 95%;
+    max-width: 600px;
+    background:white;
+    padding: 20px;
+    border: 1px solid #000;
+    border-radius: 1%;  
+}
+h2{
+    text-align: center;
+    margin-top: 0;
+    font-size: 1,5em;
+}
+.form_label{
+    width: 40%;
+    display: block;
+}
+.form_input{
+    width: 60%;
+    padding: 5px;
+    font-size: 1em;
+    display: block;
+}
+.container-flex{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    align-items: center;
+}
+.form-select{
+    width: 60%;
+    padding: 5px;
+    font-size: 1em;
+    display: block;
+    
+}
+
+.form-radio{
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 0.5em;
+    width: 100%;
+    
+}
+h3{
+    display: block;
+    margin-top: 1em;
+    font-family: sans-serif;
+}
+.form-submit{
+    justify-items: center;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+.btn{
+    border: 0;
+  line-height: 2.5;
+  padding: 0 20px;
+  font-size: 1rem;
+  text-align: center;
+  color: #fff;
+  text-shadow: 1px 1px 1px #000;
+  border-radius: 10px;
+  background-color: rgb(150, 193, 216);
+  background-image: linear-gradient(
+    to top left,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.2) 30%,
+    rgba(0, 0, 0, 0));
+    box-shadow:
+    inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+    inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.styled:hover {
+  background-color:  rgb(150, 193, 216);;
+}
+
+.styled:active {
+  box-shadow:
+    inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.text-info {
+    color: red;
+    font-size: 0.8rem;
+
+}
+
+
+

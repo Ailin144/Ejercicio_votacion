@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Formulario</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="./assets/style/style.css">
+        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    </head>
+
+    <body>
+
+        <form method="post" id="myForm" name="myForm" class="form_container" action="">
+
+            <h2 class=>Formulario de Votación</h2>    
+
+            <div class="container-flex">
+                <label for="name_lastname" class="form_label" >Nombre y Apellido:</label>
+                <input type="text" class="form_input" id="name_lastname" name="name_lastname" required>
+            </div>
+            <div class="container-flex">
+                <label for="alias" class="form_label" >Alias:</label>
+                <input type="text" class="form_input" id="alias" name="alias" required>
+            </div>    
+            <div class="container-flex">
+                <label for="rut" class="form_label" >Rut:</label>
+                <input type="text" class="form_input" id="rut" name="rut" required>
+                <p class="text-info" id="msgerrorrut"></p>
+            </div>  
+            <div class="container-flex">            
+                <label for="email" class="form_label" >Email:</label>
+                <input type="email" class="form_input" id="email" name="email" required>
+            </div>
+                
+            <div class="container-flex">
+                <label for="region" class="form_label">Región:</label>
+                <select class="form-select" id="region" name="region" required></select>   
+            </div>
+            <p class="text-info" id="msgerrorregion"></p>
+            
+            <div class="container-flex">
+                <label for="commune" class="form_label">Comuna:</label>
+                <select class="form-select" id="commune" name="commune" required></select>
+            </div>
+            <p class="text-info" id="msgerrorcommune"></p>
+                
+            <div class="container-flex">
+                <label for="candidate" class="form_label">Candidato:</label>
+                <select class="form-select" id="candidate" name="candidate" required></select>
+            </div>
+            <p class="text-info" id="msgerrorcandidate"></p>
+                
+        
+            <div class="form-radio">
+                <h3 >Como se entero de nosotros:</h3>
+                <input type="radio" id="web" name="red" value="3" checked>
+                <label for="web">Web</label>
+                
+                <input type="radio" id="tv" name="red" value="2">
+                <label for="tv">TV</label>
+                
+                <input type="radio" id="redes" name="red" value="4">
+                <label for="redes">Redes Sociales</label>
+                
+                <input type="radio" id="amigo" name="red" value="1">
+                <label for="amigo">Amigo</label>
+            </div>
+
+            <div class="form-submit">
+                <input type="submit" class="btn" value="Votar">
+            </div>
+
+        </form>
+
+        <!-- Cargar funciones de javascript-->
+        <script type="module" src="./js/index.js"></script>
+
+    </body>
+</html>
