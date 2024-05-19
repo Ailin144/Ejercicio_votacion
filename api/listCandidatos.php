@@ -9,7 +9,7 @@
 
     if($_SERVER['REQUEST_METHOD'] == "GET"){
 
-        $results = FunctionsDatabase::listCandidatos();
+        $results = FunctionsDatabase::listCandidates();
 
         success($results);
         exit;

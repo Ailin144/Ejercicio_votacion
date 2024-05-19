@@ -23,7 +23,7 @@ jQuery(document).ready(function () {
 		
         // array de los candidatos en la comuna seleccionada
         var candidatosCommune = candidatos.filter((item) => {
-            return item.commune == valueCommune;
+            return item.id_commune == valueCommune;
         });
 
         let index = 0;

@@ -1,18 +1,24 @@
 <?php
 
-
 function validateRegister($values){
 
     $valid = true;
+    
+    $validVo = validaVote($values["rut"]);
+
+    if(!$validVo){
+        return "Vote_false";
+    }
 
     $valid = validaString($values["name_lastname"])?$valid:false;
-    $valid = validaString($values["alias"])?$valid:false;
+    $valid = validaAlias($values["alias"])?$valid:false;
     $valid = validaRut($values["rut"])?$valid:false;
     $valid = validaEmail($values["email"])?$valid:false;
-    $valid = validaString($values["region"])?$valid:false;
-    $valid = validaString($values["commune"])?$valid:false;
-    $valid = validaCandidate($values["candidate"])?$valid:false;
+    $valid = validaNumber($values["region"])?$valid:false;
+    $valid = validaNumber($values["commune"])?$valid:false;
+    $valid = validaNumber($values["candidate"])?$valid:false;
     $valid = validaRed($values["red"])?$valid:false;
+    $valid = validaVote($values["rut"])?$valid:false;
 
     return $valid;
 }
@@ -22,6 +28,13 @@ function validaString($value){
         return true;
     return false;
 }
+
+function validaAlias($value){
+    if (preg_match("/^(?=[A-Za-z]+[0-9]|[0-9]+[A-Za-z])[A-Za-z0-9]{5,100}$/", $value) == 1) //VALIDA CANTIDAD DE CARACTERES Y QUE CONTENGA NUMEROS
+        return true; 
+    return false;
+ }
+ 
 
 function validaEmail($value){
     return filter_var($value, FILTER_VALIDATE_EMAIL);
@@ -84,14 +97,33 @@ function validaRut($rut) {
     }
 }
 
-function validaCandidate(){
-    return true;
+function validaRed($values){
+    if(count($values) < 2) //VALIDA QUE CONTENGA 2 O MAS DE 2 REGISTROS
+        return false;
+
+    $valid = true;
+    foreach ($values as $key => $value) {
+        if( !is_numeric($value) || ($value != 1 && $value != 2 && $value != 3 && $value != 4)) //VALIDA SI EL REGISTRO ES UN NUMERO ENTRE EL 1 Y EL 4
+            $valid = false;
+    }
+    
+    return $valid;
 }
 
-function validaRed($value){
-    if( is_numeric($value) && ($value == 1 || $value == 2 || $value == 3 || $value == 4))
+function validaNumber($value){
+    if( is_numeric($value))
         return true;
     return false;
 }
 
+function validaVote($value){
+    require_once "functionDatabase.php";
+    
+    $result = FunctionsDatabase::validaVote($value);
+
+    if( $result[0]->countVote == 0 )
+        return true;
+
+    return false;
+}
 ?>

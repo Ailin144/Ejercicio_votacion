@@ -1,4 +1,4 @@
-import {Fn as Rf} from "./functions/rut.function.js";
+import {ValidateService} from "./functions/validate.function.js";
 import {ApiService} from './functions/api.function.js';
 
 import "./functions/regiones.function.js"; // Carga las regiones y comunas en los selectores
@@ -10,7 +10,7 @@ myForm.addEventListener('submit', async (event) => {
 	
 	event.preventDefault();
 
-	var formulario = validaDatos(event);
+	var formulario = await validaDatos(event);
 
 	if(!formulario)// si el formulario es false no se envia
 		return;
@@ -20,7 +20,7 @@ myForm.addEventListener('submit', async (event) => {
 	var response = await apiService.createVotacion(formulario);
 
 	if(response.status!=200){
-		alert(`EL formulario no se registro por: ${response.error.description}`);
+		alert(`EL formulario no se registro por: ${response.error}`);
         return;
     }
 
@@ -32,43 +32,88 @@ myForm.addEventListener('submit', async (event) => {
 });
 
 function validaDatos(event){
+	return new Promise(async (resolve) => {
+			
+		const validateService = new ValidateService;
 
-	const data = new FormData(event.target);// Datos de form data para envio a servidor
-	var formulario = Object.fromEntries(data.entries());// Transforma El formData a un objeto
+		const data = new FormData(event.target);// Datos de form data para envio a servidor
+		var formulario = Object.fromEntries(data.entries());// Transforma El formData a un objeto
 
-	formulario.rut = formulario.rut.replace(".", '')//Elimina los "." dentro del value rut
-	if (!Rf.validaRut( formulario.rut )){// Valida si el rut es valido
-		$("#msgerrorrut").html("El rut ingresado es inválido");
-		return false;
-	}else{
-		$("#msgerrorrut").html("");// Si el rut es valido se borra la lenyenda
-    }
+		console.log(formulario)
 
-	formulario.region = formulario.region.replace(".", '')//Elimina los "." dentro del value rut
-	if (formulario.region == 'sin-region'){// Valida si el rut es valido
-		$("#msgerrorregion").html("Seleccione una región");
-		return false;
-	}else{
-		$("#msgerrorregion").html("");// Si el rut es valido se borra la lenyenda
-    }
+		console.log({alias: await validateService.validateAlias( formulario.alias ), email: await validateService.validateEmail( formulario.email )})
 
-	formulario.commune = formulario.commune.replace(".", '')//Elimina los "." dentro del value rut
-	if (formulario.commune == 'sin-comuna'){// Valida si el rut es valido
-		$("#msgerrorcommune").html("Seleccione una comuna");
-		return false;
-	}else{
-		$("#msgerrorcommune").html("");// Si el rut es valido se borra la lenyenda
-    }
-	
-	formulario.candidate = formulario.candidate.replace(".", '')//Elimina los "." dentro del value rut
-	if (formulario.candidate == 'sin-candidato'){// Valida si el rut es valido
-		$("#msgerrorcandidate").html("Seleccione un candidato");
-		return false;
-	}else{
-		$("#msgerrorcandidate").html("");// Si el rut es valido se borra la lenyenda
-    }
-	
-	return formulario
+
+		formulario.rut = formulario.rut.replaceAll(".", '')//Elimina los "." dentro del value rut
+		if (!await validateService.validateRut( formulario.rut )){// Valida si el rut es valido
+			$("#msgerrorrut").html("El rut ingresado es inválido");
+			resolve(false);
+			return;
+		}else{
+			$("#msgerrorrut").html("");// Si el rut es valido se borra la lenyenda
+		}
+
+		if (!await validateService.validateAlias( formulario.alias )){
+			$("#msgerroralias").html("El Alias ingresado es inválido");
+			resolve(false);
+			return;
+		}else{
+			$("#msgerroralias").html("");
+		}	
+
+		if (!await validateService.validateEmail( formulario.email )){// Valida si el rut es valido
+			$("#msgerroremail").html("El email ingresado es inválido");
+			resolve(false);
+			return;
+		}else{
+			$("#msgerroremail").html("");
+		}
+		
+
+		let checkboxes = document.querySelectorAll('input[name="red"]:checked');
+		let redes = [];
+		checkboxes.forEach((checkbox) => {
+			redes.push(checkbox.value);
+		});
+		
+		formulario = {...formulario, red:redes};
+		if ( !await validateService.validateRed( redes )){
+			$("#msgerrorred").html("Escoja al menos dos opciones");
+			resolve(false);
+			return;
+		}else{
+			$("#msgerrorred").html("");
+		}
+
+		formulario.region = formulario.region.replace(".", '')
+		if (formulario.region == 'sin-region'){
+			$("#msgerrorregion").html("Seleccione una región");
+			resolve(false);
+			return;
+		}else{
+			$("#msgerrorregion").html("");
+		}
+
+		formulario.commune = formulario.commune.replace(".", '')
+		if (formulario.commune == 'sin-comuna'){
+			$("#msgerrorcommune").html("Seleccione una comuna");
+			resolve(false);
+			return;
+		}else{
+			$("#msgerrorcommune").html("");
+		}
+		
+		formulario.candidate = formulario.candidate.replace(".", '')
+		if (formulario.candidate == 'sin-candidato'){
+			$("#msgerrorcandidate").html("Seleccione un candidato");
+			resolve(false);
+			return;
+		}else{
+			$("#msgerrorcandidate").html("");
+		}
+		
+		resolve( formulario );
+	})
 
 }
 

@@ -1,0 +1,18 @@
+Datos de la aplicación
+
+Pasos Antes del uso de la aplicación
+
+1.- Cambio de variables de entorno de base de datos (api/connection.php)
+
+    $_ENV["HOST"]       = "MY_HOST";        // MY_HOST = El host de la base de datos
+    $_ENV["DATABASE"]   = "MY_DATABASE";    // MY_DATABASE = Nombre de la base de datos
+    $_ENV["USER"]       = "MY_USER";        // MY_USER = Nombre del usuario de la base de datos
+    $_ENV["PASS"]       = "MY_PASS";        // MY_PASSWORD = La contraseña de la base de datos
+
+2.- Importar La base de datos desde el archivo db_form.sql
+
+
+Versiones de software
+
+    Versión de PHP: PHP 8.2.4
+    Versión de pdo_mysql: mysqlnd 8.2.4

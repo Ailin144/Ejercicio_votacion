@@ -3,7 +3,7 @@
 $_ENV["HOST"]       = "MY_HOST";
 $_ENV["DATABASE"]   = "MY_DATABASE";
 $_ENV["USER"]       = "MY_USER";
-$_ENV["PASS"]       = "MY_PASSWORD";
+$_ENV["PASS"]       = "MY_PASS";
 
 class Connection{
 

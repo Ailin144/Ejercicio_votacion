@@ -11,6 +11,16 @@ export class ApiService{
         })
         return response.json()
     }
+    
+    async listRegions() {
+        const response = await fetch(`./api/listRegions.php`, {
+            method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			}
+        })
+        return response.json()
+    }
 
     async createVotacion(formulario) {
         const response = await fetch(`./api/createVotacion.php`, {
